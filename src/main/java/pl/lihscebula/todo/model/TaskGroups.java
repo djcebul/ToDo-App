@@ -3,25 +3,24 @@ package pl.lihscebula.todo.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
-@Table(name = "tasks")
-public class Task{
+@Table(name = "tasks_groups")
+public class TaskGroups {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "Task's description must be not empty")
+    @NotBlank(message = "Task's groups description must be not empty")
     private String description;
     private  boolean done;
-    private LocalDateTime deadline;
-
     @Embedded
     private Audit audit = new Audit();
-    @ManyToOne()
-    @JoinColumn(name = "task_group_id")
-    private TaskGroups group;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
+    private Set<Task> tasks;
 
-    public Task() {
+
+    public TaskGroups() {
     }
 
     public int getId() {
@@ -48,22 +47,11 @@ public class Task{
         this.done = done;
     }
 
-    public LocalDateTime getDeadLine() {
-        return deadline;
+    public Set<Task> getTasks() {
+        return tasks;
     }
 
-    public void setDeadLine(LocalDateTime deadLine) {
-        this.deadline = deadLine;
-    }
-
-    public void updateFrom(final Task source) {
-        description = source.description;
-        done = source.done;
-        deadline = source.deadline;
-        group = source.group;
-    }
-
-    TaskGroups getGroup() {
-        return group;
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }

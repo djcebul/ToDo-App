@@ -1,12 +1,6 @@
-spring.profiles.active=local
-
-spring.main.banner-mode=off
-task.allowMultipleTasksFromTemplate=false
-
-spring.flyway.baselineOnMigrate=true
-spring.flyway.locations=classpath:db/migration
-spring.flyway.schemas=public
-spring.flyway.enabled=true
+  spring:
+    h2.console:
+      enabled: false
 
 #    Wczesniej w pliku .properties wygadalo to tak:
 #spring.h2.console.enabled=true
